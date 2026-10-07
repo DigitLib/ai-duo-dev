@@ -21,8 +21,7 @@ Based on the open-source **A.I. Duet** experiment by **Yotam Mann & Google Creat
 | **Inference Engine** | Heavy TensorFlow graph execution | **Sub-50ms CPU inference via ONNX Runtime** |
 | **Real-Time Protocol**| HTTP polling (high latency) | **Bidirectional WebSockets (`/ws`) + REST fallback** |
 | **Frontend Stack** | Webpack 1, Gulp, Legacy ES5 | **Vite 8, Modern ES Modules, SCSS** |
-| **Zero-Install Run** | Required full Node build pipeline | **Pre-compiled bundle (`dist/`) or 100% In-Browser WASM (`gh_pages/`)** |
-| **In-Browser Inference**| Not possible | **ONNX Runtime Web (WASM) — Zero backend needed for GitHub Pages!** |
+| **Zero-Install Run** | Required full Node build pipeline | **Pre-compiled bundle (`dist/`)** |
 | **Duet Modes** | Turn-based only | **Turn-Based (Call & Response)** + **Play Together (Live Jam)** |
 | **Tempo Estimation** | Coarse static bins | **Dynamic Inter-Onset Interval (IOI) tempo tracking (60–160 BPM)** |
 | **Sampling Algorithm**| Unconstrained temperature | **Nucleus ($p=0.90$) sampling** (prevents rapid machine-gun notes) |
