@@ -1,0 +1,990 @@
+
+pytorch
+2.14.1+cpu:µÓ
+ˆ
+x
+	prev_attncatnode_cat"Concat*
+axis†J@
+	namespace3: __main__.AttentionMelodyRNN/cat: aten.cat.defaultJU
+pkg.torch.onnx.class_hierarchy3['__main__.AttentionMelodyRNN', 'aten.cat.default']Jå
+pkg.torch.onnx.fx_noder%cat : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%x, %prev_attn], 1), kwargs = {})J)
+pkg.torch.onnx.name_scopes['', 'cat']JÓ
+pkg.torch.onnx.stack_traceœFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 72, in forward
+    concat_input = torch.cat([x, prev_attn], dim=1) # [batch, 586]
+∑
+cat
+attn_input_lin_wmatmulnode_matmul"MatMulJF
+	namespace9: __main__.AttentionMelodyRNN/matmul: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jò
+pkg.torch.onnx.fx_node~%matmul : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat, %p_attn_input_lin_w), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'matmul']Jï
+pkg.torch.onnx.stack_traceˆFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 73, in forward
+    projected_x = torch.matmul(concat_input, self.attn_input_lin_w) + self.attn_input_lin_b # [batch, 74]
+©
+matmul
+attn_input_lin_badd_6
+node_add_6"AddJA
+	namespace4: __main__.AttentionMelodyRNN/add_6: aten.add.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.add.Tensor']Jñ
+pkg.torch.onnx.fx_node|%add_6 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul, %p_attn_input_lin_b), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'add_6']Jï
+pkg.torch.onnx.stack_traceˆFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 73, in forward
+    projected_x = torch.matmul(concat_input, self.attn_input_lin_w) + self.attn_input_lin_b # [batch, 74]
+ã
+add_6
+h0cat_1
+node_cat_1"Concat*
+axis†Jb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/cat_1: aten.cat.defaultJq
+pkg.torch.onnx.class_hierarchyO['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.cat.default']Jã
+pkg.torch.onnx.fx_nodeq%cat_1 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%add_6, %h0], 1), kwargs = {})J4
+pkg.torch.onnx.name_scopes['', 'cell0', 'cat_1']J∫
+pkg.torch.onnx.stack_traceõFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 15, in forward
+    concat = torch.cat([x, h], dim=1) # [batch, in_features + hidden_size]
+†
+cat_1
+cell0.wmatmul_1node_matmul_1"MatMulJh
+	namespace[: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/matmul_1: aten.matmul.defaultJt
+pkg.torch.onnx.class_hierarchyR['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.matmul.default']Jì
+pkg.torch.onnx.fx_nodey%matmul_1 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat_1, %p_cell0_w), kwargs = {})J7
+pkg.torch.onnx.name_scopes['', 'cell0', 'matmul_1']JΩ
+pkg.torch.onnx.stack_traceûFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 16, in forward
+    linear = torch.matmul(concat, self.w) + self.b # [batch, 4 * hidden_size]
+ç
+matmul_1
+cell0.badd_16node_add_16"AddJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/add_16: aten.add.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.add.Tensor']Jê
+pkg.torch.onnx.fx_nodev%add_16 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_1, %p_cell0_b), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'add_16']JΩ
+pkg.torch.onnx.stack_traceûFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 16, in forward
+    linear = torch.matmul(concat, self.w) + self.b # [batch, 4 * hidden_size]
+{
+add_16split_split_0split_split_1split_split_2split_split_3node_Split_36"Split*
+axis†*
+num_outputs†
+ç
+split_split_2sigmoidnode_sigmoid"SigmoidJh
+	namespace[: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/sigmoid: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jå
+pkg.torch.onnx.fx_noder%sigmoid : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem_2,), kwargs = {})J6
+pkg.torch.onnx.name_scopes['', 'cell0', 'sigmoid']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+ı
+c0
+sigmoidmul_22node_mul_22"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/mul_22: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jà
+pkg.torch.onnx.fx_noden%mul_22 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%c0, %sigmoid), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'mul_22']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+ï
+split_split_0	sigmoid_1node_sigmoid_1"SigmoidJj
+	namespace]: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/sigmoid_1: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jå
+pkg.torch.onnx.fx_noder%sigmoid_1 : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem,), kwargs = {})J8
+pkg.torch.onnx.name_scopes['', 'cell0', 'sigmoid_1']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+Ú
+split_split_1tanh	node_tanh"TanhJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/tanh: aten.tanh.defaultJr
+pkg.torch.onnx.class_hierarchyP['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.tanh.default']JÜ
+pkg.torch.onnx.fx_nodel%tanh : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%getitem_1,), kwargs = {})J3
+pkg.torch.onnx.name_scopes['', 'cell0', 'tanh']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+˝
+	sigmoid_1
+tanhmul_29node_mul_29"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/mul_29: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jå
+pkg.torch.onnx.fx_noder%mul_29 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sigmoid_1, %tanh), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'mul_29']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+˚
+mul_22
+mul_29new_c0node_add_47"AddJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/add_47: aten.add.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.add.Tensor']Jã
+pkg.torch.onnx.fx_nodeq%add_47 : [num_users=3] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_22, %mul_29), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'add_47']J≥
+pkg.torch.onnx.stack_traceîFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+ﬂ
+new_c0tanh_1node_tanh_1"TanhJd
+	namespaceW: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/tanh_1: aten.tanh.defaultJr
+pkg.torch.onnx.class_hierarchyP['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.tanh.default']JÖ
+pkg.torch.onnx.fx_nodek%tanh_1 : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%add_47,), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'tanh_1']J†
+pkg.torch.onnx.stack_traceÅFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+Ñ
+split_split_3	sigmoid_2node_sigmoid_2"SigmoidJj
+	namespace]: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/sigmoid_2: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jé
+pkg.torch.onnx.fx_nodet%sigmoid_2 : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem_3,), kwargs = {})J8
+pkg.torch.onnx.name_scopes['', 'cell0', 'sigmoid_2']J†
+pkg.torch.onnx.stack_traceÅFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+Ó
+tanh_1
+	sigmoid_2new_h0node_mul_38"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell0: __main__.TFBasicLSTMCell/mul_38: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jé
+pkg.torch.onnx.fx_nodet%mul_38 : [num_users=3] = call_function[target=torch.ops.aten.mul.Tensor](args = (%tanh_1, %sigmoid_2), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell0', 'mul_38']J†
+pkg.torch.onnx.stack_traceÅFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 76, in forward
+    new_h0, new_c0 = self.cell0(projected_x, h0, c0)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+à
+new_h0
+h1cat_2
+node_cat_2"Concat*
+axis†Jb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/cat_2: aten.cat.defaultJq
+pkg.torch.onnx.class_hierarchyO['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.cat.default']Jå
+pkg.torch.onnx.fx_noder%cat_2 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%mul_38, %h1], 1), kwargs = {})J4
+pkg.torch.onnx.name_scopes['', 'cell1', 'cat_2']Jµ
+pkg.torch.onnx.stack_traceñFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 15, in forward
+    concat = torch.cat([x, h], dim=1) # [batch, in_features + hidden_size]
+õ
+cat_2
+cell1.wmatmul_2node_matmul_2"MatMulJh
+	namespace[: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/matmul_2: aten.matmul.defaultJt
+pkg.torch.onnx.class_hierarchyR['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.matmul.default']Jì
+pkg.torch.onnx.fx_nodey%matmul_2 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat_2, %p_cell1_w), kwargs = {})J7
+pkg.torch.onnx.name_scopes['', 'cell1', 'matmul_2']J∏
+pkg.torch.onnx.stack_traceôFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 16, in forward
+    linear = torch.matmul(concat, self.w) + self.b # [batch, 4 * hidden_size]
+à
+matmul_2
+cell1.badd_66node_add_66"AddJb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/add_66: aten.add.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.add.Tensor']Jê
+pkg.torch.onnx.fx_nodev%add_66 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_2, %p_cell1_b), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'add_66']J∏
+pkg.torch.onnx.stack_traceôFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 16, in forward
+    linear = torch.matmul(concat, self.w) + self.b # [batch, 4 * hidden_size]
+É
+add_66split_1_split_0split_1_split_1split_1_split_2split_1_split_3node_Split_42"Split*
+axis†*
+num_outputs†
+î
+split_1_split_2	sigmoid_3node_sigmoid_3"SigmoidJj
+	namespace]: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/sigmoid_3: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jé
+pkg.torch.onnx.fx_nodet%sigmoid_3 : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem_6,), kwargs = {})J8
+pkg.torch.onnx.name_scopes['', 'cell1', 'sigmoid_3']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+Ù
+c1
+	sigmoid_3mul_57node_mul_57"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/mul_57: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jä
+pkg.torch.onnx.fx_nodep%mul_57 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%c1, %sigmoid_3), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'mul_57']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+î
+split_1_split_0	sigmoid_4node_sigmoid_4"SigmoidJj
+	namespace]: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/sigmoid_4: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jé
+pkg.torch.onnx.fx_nodet%sigmoid_4 : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem_4,), kwargs = {})J8
+pkg.torch.onnx.name_scopes['', 'cell1', 'sigmoid_4']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+˘
+split_1_split_1tanh_2node_tanh_2"TanhJd
+	namespaceW: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/tanh_2: aten.tanh.defaultJr
+pkg.torch.onnx.class_hierarchyP['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.tanh.default']Jà
+pkg.torch.onnx.fx_noden%tanh_2 : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%getitem_5,), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'tanh_2']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+¸
+	sigmoid_4
+tanh_2mul_64node_mul_64"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/mul_64: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jé
+pkg.torch.onnx.fx_nodet%mul_64 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sigmoid_4, %tanh_2), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'mul_64']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+ˆ
+mul_57
+mul_64new_c1node_add_97"AddJb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/add_97: aten.add.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.add.Tensor']Jã
+pkg.torch.onnx.fx_nodeq%add_97 : [num_users=3] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_57, %mul_64), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'add_97']JÆ
+pkg.torch.onnx.stack_traceèFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 19, in forward
+    new_c = c * torch.sigmoid(f) + torch.sigmoid(i) * torch.tanh(j)
+⁄
+new_c1tanh_3node_tanh_3"TanhJd
+	namespaceW: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/tanh_3: aten.tanh.defaultJr
+pkg.torch.onnx.class_hierarchyP['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.tanh.default']JÖ
+pkg.torch.onnx.fx_nodek%tanh_3 : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%add_97,), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'tanh_3']Jõ
+pkg.torch.onnx.stack_trace¸File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+Å
+split_1_split_3	sigmoid_5node_sigmoid_5"SigmoidJj
+	namespace]: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/sigmoid_5: aten.sigmoid.defaultJu
+pkg.torch.onnx.class_hierarchyS['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.sigmoid.default']Jé
+pkg.torch.onnx.fx_nodet%sigmoid_5 : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%getitem_7,), kwargs = {})J8
+pkg.torch.onnx.name_scopes['', 'cell1', 'sigmoid_5']Jõ
+pkg.torch.onnx.stack_trace¸File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+È
+tanh_3
+	sigmoid_5new_h1node_mul_73"MulJb
+	namespaceU: __main__.AttentionMelodyRNN/cell1: __main__.TFBasicLSTMCell/mul_73: aten.mul.TensorJp
+pkg.torch.onnx.class_hierarchyN['__main__.AttentionMelodyRNN', '__main__.TFBasicLSTMCell', 'aten.mul.Tensor']Jé
+pkg.torch.onnx.fx_nodet%mul_73 : [num_users=4] = call_function[target=torch.ops.aten.mul.Tensor](args = (%tanh_3, %sigmoid_5), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'cell1', 'mul_73']Jõ
+pkg.torch.onnx.stack_trace¸File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 77, in forward
+    new_h1, new_c1 = self.cell1(new_h0, h1, c1)
+  File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 20, in forward
+    new_h = torch.tanh(new_c) * torch.sigmoid(o)
+‘
+attn_states
+val_25
+val_28
+val_25
+val_25slice_2node_slice_2"SliceJE
+	namespace8: __main__.AttentionMelodyRNN/slice_2: aten.slice.TensorJV
+pkg.torch.onnx.class_hierarchy4['__main__.AttentionMelodyRNN', 'aten.slice.Tensor']J¢
+pkg.torch.onnx.fx_nodeá%slice_2 : [num_users=1] = call_function[target=torch.ops.aten.slice.Tensor](args = (%slice_1, 1, 1, 9223372036854775807), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'slice_2']Jì
+pkg.torch.onnx.stack_traceÙFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 80, in forward
+    new_attn_states = torch.cat([attn_states[:, 1:, :], new_h1.unsqueeze(1)], dim=1) # [batch, 40, 512]
+∫
+new_h1
+val_25	unsqueezenode_unsqueeze"	UnsqueezeJL
+	namespace?: __main__.AttentionMelodyRNN/unsqueeze: aten.unsqueeze.defaultJ[
+pkg.torch.onnx.class_hierarchy9['__main__.AttentionMelodyRNN', 'aten.unsqueeze.default']Jè
+pkg.torch.onnx.fx_nodeu%unsqueeze : [num_users=1] = call_function[target=torch.ops.aten.unsqueeze.default](args = (%mul_73, 1), kwargs = {})J/
+pkg.torch.onnx.name_scopes['', 'unsqueeze']Jì
+pkg.torch.onnx.stack_traceÙFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 80, in forward
+    new_attn_states = torch.cat([attn_states[:, 1:, :], new_h1.unsqueeze(1)], dim=1) # [batch, 40, 512]
+ª
+slice_2
+	unsqueezenew_attn_states
+node_cat_3"Concat*
+axis†JB
+	namespace5: __main__.AttentionMelodyRNN/cat_3: aten.cat.defaultJU
+pkg.torch.onnx.class_hierarchy3['__main__.AttentionMelodyRNN', 'aten.cat.default']Jî
+pkg.torch.onnx.fx_nodez%cat_3 : [num_users=3] = call_function[target=torch.ops.aten.cat.default](args = ([%slice_2, %unsqueeze], 1), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'cat_3']Jì
+pkg.torch.onnx.stack_traceÙFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 80, in forward
+    new_attn_states = torch.cat([attn_states[:, 1:, :], new_h1.unsqueeze(1)], dim=1) # [batch, 40, 512]
+ó
+new_attn_states
+attn_wmatmul_3node_matmul_3"MatMulJH
+	namespace;: __main__.AttentionMelodyRNN/matmul_3: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jí
+pkg.torch.onnx.fx_nodex%matmul_3 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat_3, %p_attn_w), kwargs = {})J.
+pkg.torch.onnx.name_scopes['', 'matmul_3']JÒ
+pkg.torch.onnx.stack_trace“File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 83, in forward
+    k = torch.matmul(new_attn_states, self.attn_w) # [batch, 40, 512]
+∏
+new_c0
+new_h0
+new_c1
+new_h1cat_4
+node_cat_4"Concat*
+axis†JB
+	namespace5: __main__.AttentionMelodyRNN/cat_4: aten.cat.defaultJU
+pkg.torch.onnx.class_hierarchy3['__main__.AttentionMelodyRNN', 'aten.cat.default']J£
+pkg.torch.onnx.fx_nodeà%cat_4 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%add_47, %mul_38, %add_97, %mul_73], 1), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'cat_4']Jˇ
+pkg.torch.onnx.stack_trace‡File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 84, in forward
+    state_flat = torch.cat([new_c0, new_h0, new_c1, new_h1], dim=1) # [batch, 2048]
+¶
+cat_4
+
+attn_lin_wmatmul_4node_matmul_4"MatMulJH
+	namespace;: __main__.AttentionMelodyRNN/matmul_4: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jñ
+pkg.torch.onnx.fx_node|%matmul_4 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat_4, %p_attn_lin_w), kwargs = {})J.
+pkg.torch.onnx.name_scopes['', 'matmul_4']JÇ
+pkg.torch.onnx.stack_trace„File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 85, in forward
+    query = torch.matmul(state_flat, self.attn_lin_w) + self.attn_lin_b # [batch, 512]
+ò
+matmul_4
+
+attn_lin_badd_136node_add_136"AddJC
+	namespace6: __main__.AttentionMelodyRNN/add_136: aten.add.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.add.Tensor']Jî
+pkg.torch.onnx.fx_nodez%add_136 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_4, %p_attn_lin_b), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'add_136']JÇ
+pkg.torch.onnx.stack_trace„File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 85, in forward
+    query = torch.matmul(state_flat, self.attn_lin_w) + self.attn_lin_b # [batch, 512]
+£
+add_136
+val_25unsqueeze_1node_unsqueeze_1"	UnsqueezeJN
+	namespaceA: __main__.AttentionMelodyRNN/unsqueeze_1: aten.unsqueeze.defaultJ[
+pkg.torch.onnx.class_hierarchy9['__main__.AttentionMelodyRNN', 'aten.unsqueeze.default']Jí
+pkg.torch.onnx.fx_nodex%unsqueeze_1 : [num_users=1] = call_function[target=torch.ops.aten.unsqueeze.default](args = (%add_136, 1), kwargs = {})J1
+pkg.torch.onnx.name_scopes['', 'unsqueeze_1']J
+pkg.torch.onnx.stack_trace—File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 87, in forward
+    v_scores = torch.tanh(k + query.unsqueeze(1)) # [batch, 40, 512]
+Ü
+matmul_3
+unsqueeze_1add_144node_add_144"AddJC
+	namespace6: __main__.AttentionMelodyRNN/add_144: aten.add.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.add.Tensor']Jì
+pkg.torch.onnx.fx_nodey%add_144 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_3, %unsqueeze_1), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'add_144']J
+pkg.torch.onnx.stack_trace—File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 87, in forward
+    v_scores = torch.tanh(k + query.unsqueeze(1)) # [batch, 40, 512]
+Ï
+add_144tanh_4node_tanh_4"TanhJD
+	namespace7: __main__.AttentionMelodyRNN/tanh_4: aten.tanh.defaultJV
+pkg.torch.onnx.class_hierarchy4['__main__.AttentionMelodyRNN', 'aten.tanh.default']JÜ
+pkg.torch.onnx.fx_nodel%tanh_4 : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%add_144,), kwargs = {})J,
+pkg.torch.onnx.name_scopes['', 'tanh_4']J
+pkg.torch.onnx.stack_trace—File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 87, in forward
+    v_scores = torch.tanh(k + query.unsqueeze(1)) # [batch, 40, 512]
+É
+tanh_4
+attn_vmatmul_5node_matmul_5"MatMulJH
+	namespace;: __main__.AttentionMelodyRNN/matmul_5: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jì
+pkg.torch.onnx.fx_nodey%matmul_5 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%tanh_4, %p_attn_v), kwargs = {})J.
+pkg.torch.onnx.name_scopes['', 'matmul_5']JÂ
+pkg.torch.onnx.stack_trace∆File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 88, in forward
+    s = torch.matmul(v_scores, self.attn_v) # [batch, 40]
+Ú
+matmul_5softmaxnode_softmax"Softmax*
+axis†JD
+	namespace7: __main__.AttentionMelodyRNN/softmax: aten.softmax.intJU
+pkg.torch.onnx.class_hierarchy3['__main__.AttentionMelodyRNN', 'aten.softmax.int']Jâ
+pkg.torch.onnx.fx_nodeo%softmax : [num_users=1] = call_function[target=torch.ops.aten.softmax.int](args = (%matmul_5, 1), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'softmax']J‡
+pkg.torch.onnx.stack_trace¡File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 90, in forward
+    attn_weights = F.softmax(s, dim=1) # [batch, 40]
+∫
+softmax
+val_34unsqueeze_2node_unsqueeze_2"	UnsqueezeJN
+	namespaceA: __main__.AttentionMelodyRNN/unsqueeze_2: aten.unsqueeze.defaultJ[
+pkg.torch.onnx.class_hierarchy9['__main__.AttentionMelodyRNN', 'aten.unsqueeze.default']Jí
+pkg.torch.onnx.fx_nodex%unsqueeze_2 : [num_users=1] = call_function[target=torch.ops.aten.unsqueeze.default](args = (%softmax, 2), kwargs = {})J1
+pkg.torch.onnx.name_scopes['', 'unsqueeze_2']Já
+pkg.torch.onnx.stack_traceËFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 91, in forward
+    new_attn = torch.sum(new_attn_states * attn_weights.unsqueeze(2), dim=1) # [batch, 512]
+°
+new_attn_states
+unsqueeze_2mul_104node_mul_104"MulJC
+	namespace6: __main__.AttentionMelodyRNN/mul_104: aten.mul.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.mul.Tensor']Jê
+pkg.torch.onnx.fx_nodev%mul_104 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%cat_3, %unsqueeze_2), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'mul_104']Já
+pkg.torch.onnx.stack_traceËFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 91, in forward
+    new_attn = torch.sum(new_attn_states * attn_weights.unsqueeze(2), dim=1) # [batch, 512]
+…
+mul_104
+val_25new_attn
+node_sum_1"	ReduceSum*
+noop_with_empty_axes †*
+keepdims †JF
+	namespace9: __main__.AttentionMelodyRNN/sum_1: aten.sum.dim_IntListJY
+pkg.torch.onnx.class_hierarchy7['__main__.AttentionMelodyRNN', 'aten.sum.dim_IntList']Jå
+pkg.torch.onnx.fx_noder%sum_1 : [num_users=2] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%mul_104, [1]), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'sum_1']Já
+pkg.torch.onnx.stack_traceËFile "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 91, in forward
+    new_attn = torch.sum(new_attn_states * attn_weights.unsqueeze(2), dim=1) # [batch, 512]
+Ü
+new_h1
+new_attncat_5
+node_cat_5"Concat*
+axis†JB
+	namespace5: __main__.AttentionMelodyRNN/cat_5: aten.cat.defaultJU
+pkg.torch.onnx.class_hierarchy3['__main__.AttentionMelodyRNN', 'aten.cat.default']Jè
+pkg.torch.onnx.fx_nodeu%cat_5 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%mul_73, %sum_1], 1), kwargs = {})J+
+pkg.torch.onnx.name_scopes['', 'cat_5']JÔ
+pkg.torch.onnx.stack_trace–File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 94, in forward
+    combined = torch.cat([new_h1, new_attn], dim=1) # [batch, 1024]
+¶
+cat_5
+
+out_proj_wmatmul_6node_matmul_6"MatMulJH
+	namespace;: __main__.AttentionMelodyRNN/matmul_6: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jñ
+pkg.torch.onnx.fx_node|%matmul_6 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%cat_5, %p_out_proj_w), kwargs = {})J.
+pkg.torch.onnx.name_scopes['', 'matmul_6']JÇ
+pkg.torch.onnx.stack_trace„File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 95, in forward
+    context = torch.matmul(combined, self.out_proj_w) + self.out_proj_b # [batch, 512]
+ò
+matmul_6
+
+out_proj_badd_176node_add_176"AddJC
+	namespace6: __main__.AttentionMelodyRNN/add_176: aten.add.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.add.Tensor']Jî
+pkg.torch.onnx.fx_nodez%add_176 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_6, %p_out_proj_b), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'add_176']JÇ
+pkg.torch.onnx.stack_trace„File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 95, in forward
+    context = torch.matmul(combined, self.out_proj_w) + self.out_proj_b # [batch, 512]
+è
+add_176
+fc_wmatmul_7node_matmul_7"MatMulJH
+	namespace;: __main__.AttentionMelodyRNN/matmul_7: aten.matmul.defaultJX
+pkg.torch.onnx.class_hierarchy6['__main__.AttentionMelodyRNN', 'aten.matmul.default']Jí
+pkg.torch.onnx.fx_nodex%matmul_7 : [num_users=1] = call_function[target=torch.ops.aten.matmul.default](args = (%add_176, %p_fc_w), kwargs = {})J.
+pkg.torch.onnx.name_scopes['', 'matmul_7']JÛ
+pkg.torch.onnx.stack_trace‘File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 98, in forward
+    logits = torch.matmul(context, self.fc_w) + self.fc_b # [batch, 40]
+¸
+matmul_7
+fc_blogitsnode_add_183"AddJC
+	namespace6: __main__.AttentionMelodyRNN/add_183: aten.add.TensorJT
+pkg.torch.onnx.class_hierarchy2['__main__.AttentionMelodyRNN', 'aten.add.Tensor']Jé
+pkg.torch.onnx.fx_nodet%add_183 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%matmul_7, %p_fc_b), kwargs = {})J-
+pkg.torch.onnx.name_scopes['', 'add_183']JÛ
+pkg.torch.onnx.stack_trace‘File "/home/andrax/.gemini/antigravity-ide/brain/a0c2a767-8788-46ca-afdc-ec7e0e9da66b/scratch/export_attention_onnx.py", line 98, in forward
+    logits = torch.matmul(context, self.fc_w) + self.fc_b # [batch, 40]
+main_graph*YJBattn_input_lin_bj#
+locationattention_rnn.onnx.dataj
+offset0j
+length296p*WÄB
+attn_lin_bj#
+locationattention_rnn.onnx.dataj
+offset296j
+length2048p*TÄBattn_vj#
+locationattention_rnn.onnx.dataj
+offset2344j
+length2048p*XÄB
+out_proj_bj#
+locationattention_rnn.onnx.dataj
+offset4392j
+length2048p*≠(Bfc_bJ†™AÂ≠¿¥oú¿F„ß¿ºñ¿õ‚ñ¿µ£¿|ç¿kù¿wÃâ¿uoù¿åÄã¿¨€Ç¿Ûıö¿1Ç¿zäò¿˘4Å¿G˝Ñ¿F1ò¿‡Ã¿ãÔñ¿⁄#É¿Ãö¿∞sâ¿9Ü¿Ü7û¿ “ã¿S`†¿€^ê¿Xó¿TÒ§¿jËò¿À2®¿ôû¿∞≠¿y£¿;}¿¢p¿e¿ÓT1¿*d JBattn_input_lin_wj#
+locationattention_rnn.onnx.dataj
+offset104744j
+length173456p*aÄÄB
+attn_lin_wj#
+locationattention_rnn.onnx.dataj
+offset3473408j
+length4194304p*\ÄÄBattn_wj#
+locationattention_rnn.onnx.dataj
+offset278200j
+length1048576p*aÄÄB
+out_proj_wj#
+locationattention_rnn.onnx.dataj
+offset1376256j
+length2097152p*VÄ(Bfc_wj#
+locationattention_rnn.onnx.dataj
+offset22824j
+length81920p*^ ÄBcell0.wj#
+locationattention_rnn.onnx.dataj
+offset7667712j
+length4800512p*UÄBcell0.bj#
+locationattention_rnn.onnx.dataj
+offset6440j
+length8192p*_ÄÄBcell1.wj#
+locationattention_rnn.onnx.dataj
+offset12517376j
+length8388608p*VÄBcell1.bj#
+locationattention_rnn.onnx.dataj
+offset14632j
+length8192p*Bval_25J       *Bval_28Jˇˇˇˇˇˇˇ*Bval_34J       Zæ
+x
+
+batch
+J"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"&
+!pkg.torch.onnx.original_node_namexZ¡
+h0
+
+batch
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"'
+!pkg.torch.onnx.original_node_nameh0Z¡
+c0
+
+batch
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"'
+!pkg.torch.onnx.original_node_namec0Z¡
+h1
+
+batch
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"'
+!pkg.torch.onnx.original_node_nameh1Z¡
+c1
+
+batch
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"'
+!pkg.torch.onnx.original_node_namec1Z◊
+attn_states
+
+batch
+(
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"0
+!pkg.torch.onnx.original_node_nameattn_statesZœ
+	prev_attn
+
+batch
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	prev_attnbå
+logits
+
+batch
+("?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT",
+!pkg.torch.onnx.original_node_nameadd_183bå
+new_h0
+
+batch
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_namemul_38bå
+new_c0
+
+batch
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_nameadd_47bå
+new_h1
+
+batch
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_namemul_73bå
+new_c1
+
+batch
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_nameadd_97bò
+new_attn_states
+
+batch
+(
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"*
+!pkg.torch.onnx.original_node_namecat_3bç
+new_attn
+
+batch
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"*
+!pkg.torch.onnx.original_node_namesum_1j‘
+attn_input_lin_b
+
+
+J"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"7
+!pkg.torch.onnx.original_node_namep_attn_input_lin_bj…
+
+attn_lin_b
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"1
+!pkg.torch.onnx.original_node_namep_attn_lin_bj¡
+attn_v
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"-
+!pkg.torch.onnx.original_node_namep_attn_vj…
+
+out_proj_b
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"1
+!pkg.torch.onnx.original_node_namep_out_proj_bjº
+fc_b
+
+
+("<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"+
+!pkg.torch.onnx.original_node_namep_fc_bjŸ
+attn_input_lin_w
+	
+ 
+J"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"7
+!pkg.torch.onnx.original_node_namep_attn_input_lin_wjŒ
+
+attn_lin_w
+
+
+Ä
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"1
+!pkg.torch.onnx.original_node_namep_attn_lin_wj∆
+attn_w
+
+
+Ä
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"-
+!pkg.torch.onnx.original_node_namep_attn_wjŒ
+
+out_proj_w
+
+
+Ä
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"1
+!pkg.torch.onnx.original_node_namep_out_proj_wj¡
+fc_w
+	
+Ä
+("<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"+
+!pkg.torch.onnx.original_node_namep_fc_wj»
+cell0.w
+
+
+ 
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_cell0_wj√
+cell0.b
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_cell0_bj»
+cell1.w
+
+
+Ä
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_cell1_wj√
+cell1.b
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_cell1_bj[
+val_25
+
+
+"E
+$pkg.onnxscript.optimizer.folded_from['val_23', 'val_24', 'val_9']j\
+val_28
+
+
+"F
+$pkg.onnxscript.optimizer.folded_from['val_15', 'val_26', 'val_27']j
+val_34
+
+
+j
+cat
+
+batch
+ j
+matmul
+
+batch
+Jj
+add_6
+
+batch
+Jj
+cat_1
+
+batch
+ j 
+matmul_1
+
+batch
+Äj
+add_16
+
+batch
+Äj%
+split_split_0
+
+batch
+Äj%
+split_split_1
+
+batch
+Äj%
+split_split_2
+
+batch
+Äj%
+split_split_3
+
+batch
+Äj
+sigmoid
+
+batch
+Äj
+mul_22
+
+batch
+Äj!
+	sigmoid_1
+
+batch
+Äj
+tanh
+
+batch
+Äj
+mul_29
+
+batch
+Äj
+tanh_1
+
+batch
+Äj!
+	sigmoid_2
+
+batch
+Äj
+cat_2
+
+batch
+Äj 
+matmul_2
+
+batch
+Äj
+add_66
+
+batch
+Äj'
+split_1_split_0
+
+batch
+Äj'
+split_1_split_1
+
+batch
+Äj'
+split_1_split_2
+
+batch
+Äj'
+split_1_split_3
+
+batch
+Äj!
+	sigmoid_3
+
+batch
+Äj
+mul_57
+
+batch
+Äj!
+	sigmoid_4
+
+batch
+Äj
+tanh_2
+
+batch
+Äj
+mul_64
+
+batch
+Äj
+tanh_3
+
+batch
+Äj!
+	sigmoid_5
+
+batch
+Äj#
+slice_2
+
+batch
+'
+Äj%
+	unsqueeze
+
+batch
+
+Äj$
+matmul_3
+
+batch
+(
+Äj
+cat_4
+
+batch
+Äj 
+matmul_4
+
+batch
+Äj
+add_136
+
+batch
+Äj'
+unsqueeze_1
+
+batch
+
+Äj#
+add_144
+
+batch
+(
+Äj"
+tanh_4
+
+batch
+(
+Äj
+matmul_5
+
+batch
+(j
+softmax
+
+batch
+(j&
+unsqueeze_2
+
+batch
+(
+j#
+mul_104
+
+batch
+(
+Äj
+cat_5
+
+batch
+Äj 
+matmul_6
+
+batch
+Äj
+add_176
+
+batch
+Äj
+matmul_7
+
+batch
+(Çç
+0pkg.torch.export.ExportedProgram.graph_signatureÿ
+# inputs
+p_attn_input_lin_w: PARAMETER target='attn_input_lin_w'
+p_attn_input_lin_b: PARAMETER target='attn_input_lin_b'
+p_attn_lin_w: PARAMETER target='attn_lin_w'
+p_attn_lin_b: PARAMETER target='attn_lin_b'
+p_attn_w: PARAMETER target='attn_w'
+p_attn_v: PARAMETER target='attn_v'
+p_out_proj_w: PARAMETER target='out_proj_w'
+p_out_proj_b: PARAMETER target='out_proj_b'
+p_fc_w: PARAMETER target='fc_w'
+p_fc_b: PARAMETER target='fc_b'
+p_cell0_w: PARAMETER target='cell0.w'
+p_cell0_b: PARAMETER target='cell0.b'
+p_cell1_w: PARAMETER target='cell1.w'
+p_cell1_b: PARAMETER target='cell1.b'
+x: USER_INPUT
+h0: USER_INPUT
+c0: USER_INPUT
+h1: USER_INPUT
+c1: USER_INPUT
+attn_states: USER_INPUT
+prev_attn: USER_INPUT
+
+# outputs
+add_183: USER_OUTPUT
+mul_38: USER_OUTPUT
+add_47: USER_OUTPUT
+mul_73: USER_OUTPUT
+add_97: USER_OUTPUT
+cat_3: USER_OUTPUT
+sum_1: USER_OUTPUT
+ÇJ
+2pkg.torch.export.ExportedProgram.range_constraints{s18: VR[0, int_oo]}B
+ 
