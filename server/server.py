@@ -117,13 +117,15 @@ async def websocket_endpoint(websocket: WebSocket):
         log.info("Client disconnected")
 
 
+PUBLIC_DIR = os.path.join(STATIC_DIR, "public")
+
 # ---------------------------------------------------------------- frontend
-for route, directory in (("/assets", os.path.join(DIST_DIR, "assets")),
-                         ("/audio", os.path.join(STATIC_DIR, "audio")),
-                         ("/images", os.path.join(STATIC_DIR, "images")),
-                         ("/models", os.path.join(DIST_DIR, "models"))):
-    if os.path.isdir(directory):
-        app.mount(route, StaticFiles(directory=directory), name=route.strip("/"))
+for route in ("/assets", "/audio", "/images", "/models"):
+    for base_dir in (DIST_DIR, PUBLIC_DIR):
+        directory = os.path.join(base_dir, route.strip("/"))
+        if os.path.isdir(directory):
+            app.mount(route, StaticFiles(directory=directory), name=route.strip("/"))
+            break
 
 
 @app.get("/")
