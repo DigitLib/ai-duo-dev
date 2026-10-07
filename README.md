@@ -139,10 +139,9 @@ You can toggle between two models directly from the top control bar:
 │   └── basic_rnn.onnx     # Basic Melody RNN weights
 ├── static/
 │   ├── dist/              # Pre-compiled static web bundle (served directly)
-│   ├── public/            # Public static assets (audio, images, models)
+│   ├── public/            # Public static assets (audio soundfonts, images, models)
 │   ├── src/               # ES Module source code (AI, Sound, Keyboard, LocalGenerator)
 │   ├── style/             # SCSS stylesheets
-│   ├── audio/             # Soundfont samples (Salamander Grand Piano + Synth)
 │   ├── package.json       # Frontend scripts and dependencies
 │   └── vite.config.js     # Vite configuration
 └── docs/
