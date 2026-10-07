@@ -11,6 +11,8 @@
 
 Based on the open-source **A.I. Duet** experiment by **Yotam Mann & Google Creative Lab / Magenta**. Modernized with **FastAPI**, **ONNX Runtime**, **Vite / ES Modules**, and real-time **Web MIDI**.
 
+**Tested on mobile phone also. Jamming with AI on a bus, record midi and have fun!**
+
 ---
 
 ## ✨ What's New & Modernized in 2.0
