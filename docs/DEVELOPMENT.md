@@ -81,6 +81,7 @@ This generates the minified SPA in `static/dist/`. FastAPI serves this bundle di
 │   └── basic_rnn.onnx     # Basic Melody RNN ONNX model
 ├── static/
 │   ├── dist/              # Pre-compiled production bundle (served by FastAPI)
+│   ├── public/            # Static assets (audio soundfonts, images, models)
 │   ├── src/
 │   │   ├── Main.js        # Application orchestrator & audio wiring
 │   │   ├── ai/            # Duet controllers (AI.js, Tutorial.js)
@@ -89,7 +90,6 @@ This generates the minified SPA in `static/dist/`. FastAPI serves this bundle di
 │   │   ├── roll/          # Three.js 3D piano roll visualization (Roll.js)
 │   │   └── interface/     # UI controls, modals, and badges (Controls.js, About.js)
 │   ├── style/             # SCSS stylesheets
-│   ├── audio/             # Acoustic piano and synth sample soundfonts
 │   ├── package.json       # Frontend scripts and dependencies
 │   └── vite.config.js     # Vite build configuration
 └── docs/
