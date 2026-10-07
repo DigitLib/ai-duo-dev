@@ -1,0 +1,19 @@
+{
+  "name": "ai-duet",
+  "version": "2.0.0",
+  "description": "AI Duet - Upgraded with Vite and FastAPI",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tonejs/midi": "^2.0.28",
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "sass": "^1.85.1",
+    "vite": "^8.3.1"
+  }
+}
